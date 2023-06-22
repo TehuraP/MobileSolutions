@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
+
 namespace MauiVisionSample;
 
 //using Microsoft.Maui.Platform;
@@ -79,6 +81,7 @@ public partial class MainPage : ContentPage
 
     async Task UpdateExecutionProviderAsync()
     {
+      
         var executionProvider = ExecutionProviderOptions.SelectedItem switch
         {
             nameof(ExecutionProviders.CPU)    => ExecutionProviders.CPU,
@@ -104,6 +107,7 @@ public partial class MainPage : ContentPage
 
         try
         {
+          
             SetBusyState(true);
 
             if (Models.Items.Count == 0 || Models.SelectedItem == null)
@@ -131,22 +135,29 @@ public partial class MainPage : ContentPage
             }
 
             ClearResult();
-
+            
             IVisionSample sample = Models.SelectedItem switch
             {
                 MobilenetSample.Identifier => Mobilenet,
                 UltrafaceSample.Identifier => Ultraface,
                 _ => null
             };
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             var result = await sample.ProcessImageAsync(imageData);
 
             outputImage = result.Image;
             caption = result.Caption;
+            stopwatch.Stop();
+            timerTextBox.Text = stopwatch.Elapsed.ToString() + "ms have elapsed to process.";
+
         }
         finally
         {
             SetBusyState(false);
+         
+
         }
 
         if (outputImage != null)
@@ -157,6 +168,7 @@ public partial class MainPage : ContentPage
 
     Task<byte[]> GetSampleImageAsync() => Task.Run(() =>
     {
+      
         var assembly = GetType().Assembly;
 
         var imageName = Models.SelectedItem switch
@@ -298,10 +310,13 @@ public partial class MainPage : ContentPage
     };
 
     void AcquireButton_Clicked(object sender, EventArgs e)
+        
         => AcquireAndAnalyzeImageAsync(GetAcquisitionModeFromText((sender as Button).Text)).ContinueWith((task)
             => {
+                
                 if (task.IsFaulted) MainThread.BeginInvokeOnMainThread(()
               => DisplayAlert("Error", task.Exception.Message, "OK"));
+         
             });
 
     private void ExecutionProviderOptions_SelectedIndexChanged(object sender, EventArgs e)

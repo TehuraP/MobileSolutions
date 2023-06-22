@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiVisionSample.MainPage">
+             x:Class="MauiVisionSample.MainPage"
+             Title="Super MAUI App Woop Woop"
+             BackgroundColor="LightSteelBlue"
+             >
 
     <Grid RowSpacing="0" ColumnSpacing="0">
 
@@ -13,58 +16,84 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-
-        <Picker
+        <StackLayout>
+            <Picker 
+                BackgroundColor="PaleVioletRed"
             x:Name="Models"
             HorizontalTextAlignment="Center"
             Grid.Row="0"
             Margin="5,5,5,5" />
 
-        <Picker
+            <Picker
+                BackgroundColor="ForestGreen"
             x:Name="ExecutionProviderOptions"
             HorizontalTextAlignment="Center"
             Grid.Row="1"
             Margin="5,0,5,5" />
+
+        </StackLayout>
+         
+
+   
 
         <Grid Grid.Row="2" Margin="20" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
+        
             <Image
                 x:Name="OutputImage"
                 Grid.Row="0"
                 Aspect="AspectFit"
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand" />
-
+                VerticalOptions="FillAndExpand" 
+                Opacity="80"
+                Margin="2"
+                        />
+           
             <Label x:Name="Caption"
+                   BackgroundColor="LightGrey"
+                   Padding="10"
                    Grid.Row="1"
                    Margin="0,20,0,0"
-                   VerticalTextAlignment="Start"
-                   HorizontalOptions="StartAndExpand"
+                   VerticalTextAlignment="Center"
+                  HorizontalOptions="StartAndExpand"
                    VerticalOptions="StartAndExpand" />
+            <Label x:Name="timerTextBox" Text="Time elapsed..."></Label>
         </Grid>
-
-        <Button
+        <StackLayout VerticalOptions="EndAndExpand"    HorizontalOptions="Center">
+            <HorizontalStackLayout >
+                
+                
+                   <Button
+            BackgroundColor="CornflowerBlue"
             x:Name="SamplePhotoButton"
             Grid.Row="3"
             Text="Sample"
+            WidthRequest="100"
             Clicked="AcquireButton_Clicked" />
 
         <Button
+            BackgroundColor="HotPink"
             x:Name="PickPhotoButton"
             Grid.Row="4"
             Text="Pick"
+            WidthRequest="100"
             Clicked="AcquireButton_Clicked" />
 
         <Button
+            BackgroundColor="BlueViolet"
             x:Name="TakePhotoButton"
             Grid.Row="5"
             Text="Capture"
+            WidthRequest="100"
             Clicked="AcquireButton_Clicked" />
+  
 
+            </HorizontalStackLayout>
+        </StackLayout>
+     
         <ActivityIndicator
             x:Name="BusyIndicator"
             Grid.RowSpan="6"
